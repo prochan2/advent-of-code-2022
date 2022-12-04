@@ -22,9 +22,13 @@ foreach (var line in File.ReadLines(inputFile))
 
 elfs.Add(currentElf);
 
-Elf elfWithMostCalories = elfs.MaxBy(e => e.TotalCalories);
+//Elf elfWithMostCalories = elfs.MaxBy(e => e.TotalCalories);
+//Console.WriteLine(elfWithMostCalories.TotalCalories);
 
-Console.WriteLine(elfWithMostCalories.TotalCalories);
+var top3 = elfs.OrderByDescending(e => e.TotalCalories).Take(3);
+top3.ToList().ForEach(e => Console.WriteLine(e.TotalCalories));
+var sumOfTop3 = top3.Sum(e => e.TotalCalories);
+Console.WriteLine(sumOfTop3);
 
 readonly struct Elf
 {
