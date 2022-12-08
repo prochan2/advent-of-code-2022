@@ -66,9 +66,15 @@ foreach (var line in File.ReadLines(inputFile))
     }
 }
 
-var sum = FileSystem.Instance.Directories.Where(d => d.Size <= 100_000).Sum(d => d.Size);
+const long storageSize = 70_000_000;
+const long spaceRequired = 30_000_000;
+var freeSpaceAvailable = storageSize - rootDirectory.Size;
+var spaceToFreeUp = spaceRequired - freeSpaceAvailable;
 
-Console.WriteLine(sum);
+var directoryToDelete = FileSystem.Instance.Directories.Where(d => d.Size >= spaceToFreeUp).MinBy(d => d.Size)!;
+
+Console.WriteLine(directoryToDelete.Name);
+Console.WriteLine(directoryToDelete.Size);
 
 class FileSystem
 {
